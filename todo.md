@@ -19,3 +19,12 @@ Install NVIM in default location /usr/local
 ```console
 sudo make install
 ```
+7. Install Lua
+8. Install Ruby + Cargo
+9. Install Node 
+10. Install fd 
+```console
+sudo apt-get install fd-find
+```
+11. Setup LSP. 
+
