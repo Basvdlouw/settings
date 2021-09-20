@@ -10,6 +10,9 @@ vim.o.breakindent = true
 --Save undo history
 vim.opt.undofile = true
 
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true

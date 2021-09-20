@@ -25,52 +25,24 @@ local on_attach = function(_, bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
+
+-- Plugin to install language servers via :LspInstallerInfo & LspInstaller <server>
+local lsp_installer = require("nvim-lsp-installer")
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+end)
+
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
-
--- Make runtime files discoverable to the server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
---require('lspconfig').sumneko_lua.setup {
---  cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
---  on_attach = on_attach,
---  capabilities = capabilities,
---  settings = {
---    Lua = {
---      runtime = {
---        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---        version = 'LuaJIT',
---        -- Setup your lua path
---        path = runtime_path,
---      },
---      diagnostics = {
---        -- Get the language server to recognize the `vim` global
---        globals = { 'vim' },
---      },
---      workspace = {
---        -- Make the server aware of Neovim runtime files
---        library = vim.api.nvim_get_runtime_file('', true),
---      },
---      -- Do not send telemetry data containing a randomized but unique identifier
---      telemetry = {
---        enable = false,
---      },
---    },
---  },
---}
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
 
