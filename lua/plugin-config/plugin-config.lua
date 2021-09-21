@@ -6,9 +6,4 @@ require('plugin-config/gitsigns')
 require('plugin-config/lsp')
 
 -- Java LSP
-require('plugin-config/jdtls_setup')
-vim.api.nvim_command([[
-augroup jdtls_lsp
-autocmd FileType java lua require'jdtls_setup'.setup()
-augroup END 
-]])
+vim.api.nvim_command("autocmd FileType java lua require'jdtls_setup'.setup()")

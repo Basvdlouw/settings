@@ -1,4 +1,4 @@
-local M = { }
+local M = {}
 
 function M.setup()
     local on_attach = function(client, bufnr)
